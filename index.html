@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main Job Application Tracker </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e5ec;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #333;
+            background-color: #f4f4f4;
+            border-bottom: 2px solid #ddd;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .search-bar button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #31b0d5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td {
+            color: #555;
+        }
+        .applied {
+            color: #d9534f;
+            text-decoration: line-through;
+        }
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        label {
+            cursor: pointer;
+            display: inline-block;
+            padding-left: 10px;
+            user-select: none;
+        }
+        .edit-input {
+            display: none;
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .edit-button {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .edit-button:hover {
+            background-color: #31b0d5;
+        }
+        .clear-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .clear-button:hover {
+            background-color: #31b0d5;
+        }
+        .clear-button:active {
+            background-color: #2795d9;
+        }
+        .dark-mode-toggle {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .dark-mode-toggle input {
+            margin-right: 10px;
+        }
+        @media (max-width: 600px) {
+            table, th, td {
+                font-size: 14px;
+            }
+            .clear-button, .search-bar button {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Job Application Tracker</h1>
+
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search tasks...">
+        <button id="clear-search">Clear Search</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Task</th>
+            </tr>
+        </thead>
+        <tbody id="task-table">
+            <!-- Week 1 -->
+            <tr>
+                <td rowspan="6">Week 1</td>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-1" name="job-1">
+                    <label for="job-1">Apply to Company A</label>
+                    <input type="text" class="edit-input" id="edit-job-1" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-1">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-2" name="job-2">
+                    <label for="job-2">Apply to Company B</label>
+                    <input type="text" class="edit-input" id="edit-job-2" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-2">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-3" name="job-3">
+                    <label for="job-3">Apply to Company C</label>
+                    <input type="text" class="edit-input" id="edit-job-3" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-3">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-4" name="job-4">
+                    <label for="job-4">Follow up with Company A</label>
+                    <input type="text" class="edit-input" id="edit-job-4" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-4">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-5" name="job-5">
+                    <label for="job-5">Prepare for interview with Company B</label>
+                    <input type="text" class="edit-input" id="edit-job-5" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-5">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-6" name="job-6">
+                    <label for="job-6">Review resume</label>
+                    <input type="text" class="edit-input" id="edit-job-6" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-6">Edit</button>
+                </td>
+            </tr>
+            <!-- Week 2 -->
+            <tr>
+                <td rowspan="6">Week 2</td>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-7" name="job-7">
+                    <label for="job-7">Apply to Company D</label>
+                    <input type="text" class="edit-input" id="edit-job-7" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-7">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-8" name="job-8">
+                    <label for="job-8">Apply to Company E</label>
+                    <input type="text" class="edit-input" id="edit-job-8" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-8">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-9" name="job-9">
+                    <label for="job-9">Apply to Company F</label>
+                    <input type="text" class="edit-input" id="edit-job-9" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-9">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-10" name="job-10">
+                    <label for="job-10">Follow up with Company D</label>
+                    <input type="text" class="edit-input" id="edit-job-10" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-10">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-11" name="job-11">
+                    <label for="job-11">Prepare for interview with Company E</label>
+                    <input type="text" class="edit-input" id="edit-job-11" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-11">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-12" name="job-12">
+                    <label for="job-12">Network with industry professionals</label>
+                    <input type="text" class="edit-input" id="edit-job-12" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-12">Edit</button>
+                </td>
+            </tr>
+            <!-- Week 3 -->
+            <tr>
+                <td rowspan="6">Week 3</td>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-13" name="job-13">
+                    <label for="job-13">Apply to Company G</label>
+                    <input type="text" class="edit-input" id="edit-job-13" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-13">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-14" name="job-14">
+                    <label for="job-14">Apply to Company H</label>
+                    <input type="text" class="edit-input" id="edit-job-14" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-14">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-15" name="job-15">
+                    <label for="job-15">Apply to Company I</label>
+                    <input type="text" class="edit-input" id="edit-job-15" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-15">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-16" name="job-16">
+                    <label for="job-16">Follow up with Company G</label>
+                    <input type="text" class="edit-input" id="edit-job-16" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-16">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-17" name="job-17">
+                    <label for="job-17">Prepare for interview with Company H</label>
+                    <input type="text" class="edit-input" id="edit-job-17" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-17">Edit</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkbox" id="job-18" name="job-18">
+                    <label for="job-18">Research new job opportunities</label>
+                    <input type="text" class="edit-input" id="edit-job-18" placeholder="Edit task...">
+                    <button class="edit-button" data-id="job-18">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="clear-button" id="clear-all">Clear All</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const jobCheckboxes = document.querySelectorAll("input[id^='job']");
+        const editButtons = document.querySelectorAll(".edit-button");
+        
+        // Load saved checkbox states and task descriptions from localStorage
+        jobCheckboxes.forEach(checkbox => {
+            const savedState = localStorage.getItem(checkbox.id);
+            if (savedState === "true") {
+                checkbox.checked = true;
+                checkbox.closest("tr").querySelectorAll("td, label").forEach(el => el.classList.add("applied"));
+            }
+        });
+
+        // Load saved task descriptions
+        document.querySelectorAll(".edit-input").forEach(input => {
+            const taskId = input.id.replace("edit-", "");
+            const savedDescription = localStorage.getItem(`description-${taskId}`);
+            if (savedDescription) {
+                const label = document.querySelector(`label[for='${taskId}']`);
+                label.textContent = savedDescription;
+            }
+        });
+
+        // Save checkbox state and change text color
+        jobCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+                if (checkbox.checked) {
+                    checkbox.closest("tr").querySelectorAll("td, label").forEach(el => el.classList.add("applied"));
+                } else {
+                    checkbox.closest("tr").querySelectorAll("td, label").forEach(el => el.classList.remove("applied"));
+                }
+            });
+        });
+
+        // Edit task
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const taskId = button.getAttribute("data-id");
+                const label = document.querySelector(`label[for='${taskId}']`);
+                const input = document.getElementById(`edit-${taskId}`);
+                
+                if (button.textContent === "Edit") {
+                    input.style.display = "inline";
+                    input.value = label.textContent.trim();
+                    button.textContent = "Save";
+                    input.focus();
+                } else {
+                    label.textContent = input.value.trim();
+                    localStorage.setItem(`description-${taskId}`, label.textContent);
+                    input.style.display = "none";
+                    button.textContent = "Edit";
+                }
+            });
+        });
+
+        // Clear all checkbox states
+        document.getElementById("clear-all").addEventListener("click", function () {
+            jobCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.closest("tr").querySelectorAll("td, label").forEach(el => el.classList.remove("applied"));
+                localStorage.removeItem(checkbox.id);
+            });
+        });
+
+        // Search functionality
+        document.getElementById("search").addEventListener("input", function () {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll("#task-table tr").forEach(row => {
+                const task = row.querySelector("label").textContent.toLowerCase();
+                row.style.display = task.includes(searchTerm) ? "" : "none";
+            });
+        });
+
+        // Clear search input
+        document.getElementById("clear-search").addEventListener("click", function () {
+            document.getElementById("search").value = "";
+            document.querySelectorAll("#task-table tr").forEach(row => row.style.display = "");
+        });
+    });
+</script>
+
+</body>
+</html>
